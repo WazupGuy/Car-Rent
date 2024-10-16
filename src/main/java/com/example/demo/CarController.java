@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
 public class CarController {
+    
      List<Car> cars = new ArrayList<Car>();
 
 
@@ -26,8 +27,13 @@ public class CarController {
     @ResponseBody
     public List<Car> listOfCars() {
         // Simuler la récupération de la liste des voitures
-        cars.add(new Car("ABC123", "Ferrari", 100));
-        cars.add(new Car("XYZ789", "Lamborghini", 200));
+        cars.add(new Car("ABC123", "Toyota", 100));
+        cars.add(new Car("XYZ789", "Honda", 200));
+        cars.add(new Car("DEF456", "BMW", 150));
+        cars.add(new Car("GHI012", "Mercedes", 180));
+        cars.add(new Car("JKL345", "Audi", 170));
+        cars.add(new Car("MNO678", "Porsche", 220));
+        cars.add(new Car("PQR901", "Tesla", 250));
         return cars;
     }
 
@@ -35,12 +41,15 @@ public class CarController {
 
     @GetMapping("/cars/{plateNumber}")
     public ResponseEntity<Car> getCarFeatures(@PathVariable String plateNumber) {
-        Car car = new Car();
-        car.setPlateNumber(plateNumber);
-        car.setBrand("Ferrari");
-  car.setPrice(100);
-
-        return ResponseEntity.ok(car);
+        Car car = cars.stream()
+                .filter(c -> c.getPlateNumber().equals(plateNumber))
+                .findFirst()
+                .orElse(null);
+        if (car != null) {
+            return ResponseEntity.ok(car);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/cars/{plateNumber}")
