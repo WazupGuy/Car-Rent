@@ -34,6 +34,7 @@ public class CarController {
         cars.add(new Car("JKL345", "Audi", 170));
         cars.add(new Car("MNO678", "Porsche", 220));
         cars.add(new Car("PQR901", "Tesla", 250));
+        cars.add(new Car("RST302", "Ford", 250));
         return cars;
     }
 
