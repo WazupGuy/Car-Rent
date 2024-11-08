@@ -16,3 +16,5 @@ jobs:
         run: |
           export SHELL=/bin/bash
           ./gradlew build
+          docker build -t my-image .
+          docker run my-image
